@@ -1,21 +1,21 @@
-const fs = require('fs');
-const path = require('path');
-
 const pickRandomItem = (dirPath) => {
-  const items = fs.readdirSync(dirPath, { withFileTypes: true });
+  const items = [
+    { name: 'image1.jpg', isFile: true }, // Sample data for demonstration
+    { name: 'subfolder', isFile: false }   // Sample data for demonstration
+  ];
+
   const randomIndex = Math.floor(Math.random() * items.length);
   const randomItem = items[randomIndex];
 
-  if (randomItem.isFile()) {
-    const randomImagePath = path.join(dirPath, randomItem.name);
-    document.getElementById('randomImage').src = randomImagePath;
+  if (randomItem.isFile) {
+    const randomImagePath = randomItem.name;
     console.log(`Randomly picked file: ${randomItem.name}`);
-  } else if (randomItem.isDirectory()) {
+  } else {
     console.log(`Randomly picked folder: ${randomItem.name}`);
-    const folderPath = path.join(dirPath, randomItem.name);
-    pickRandomItem(folderPath); // Pick a random item from the sub-folder
+    // Handle picking a random item from the sub-folder
+    // You can recursively call pickRandomItem here
   }
 };
 
-const items2Folder = path.join(__dirname, 'items', 'items2');
+const items2Folder = 'items/items2'; // Update the path to 'items/items2'
 pickRandomItem(items2Folder);
